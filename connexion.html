@@ -1,0 +1,38 @@
+<div class="masthead">
+    <ul class="nav nav-pills pull-right">
+        <li><a href="#/">Accueil</a></li>
+        <li><a href="#/apropos">A propos</a></li>
+        <li class="active"><a href="#/connexion">Connexion</a></li>
+    </ul>
+    <h3 class="muted">Carnets</h3>
+</div>
+
+<hr/>
+
+<pre>
+{{ user | json }}
+</pre>
+
+<form class="form-signin" name="form">
+    <h2 class="form-signin-heading">Identifiez-vous</h2>
+    <input type="text" ng-model="user.login" name="login" class="input-block-level" placeholder="Identifiant" ng-required="true">
+    <input type="password" ng-model="user.password" name="password" class="input-block-level"
+           placeholder="Mot de passe" ng-required="true">
+    <div ng-show="(form.login.$dirty && form.login.$invalid) || (form.password.$invalid && form.password.$invalid)">
+        <div ng-show="form.login.$error.required">
+            Le login est requis !
+        </div>
+        <div ng-show="form.password.$error.required">
+            Le password est requis !
+        </div>
+    </div>
+    <button ng-disabled="form.$invalid" class="btn btn-large btn-primary" ng-click="signIn(user)">Connexion</button>
+
+    <!--
+    <?php
+    if (isset($_GET['echec'])){
+        echo '<div class="alert alert-error" style="margin-top:1.5em;">Echec de l\'identification...</div>';
+    }
+    ?>
+    -->
+</form>
