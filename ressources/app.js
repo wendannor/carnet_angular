@@ -1,5 +1,7 @@
 var app = angular.module("CarnetApp",
-    ['ngRoute']);
+    ['ngRoute',
+     'Carnet.services'
+    ]);
 
 app.config(function ($routeProvider) {
     $routeProvider
@@ -68,7 +70,7 @@ app.controller('NoteEditCtrl', function($scope){
 app.controller('InscriptionCtrl', function($scope){
 });
 
-app.controller('ConnexionCtrl', function($scope){
+app.controller('ConnexionCtrl', function($scope, $http, $log, UserService){
    var user = {
        login: '',
        password: ''
@@ -77,6 +79,11 @@ app.controller('ConnexionCtrl', function($scope){
     $scope.signIn = function(user) {
         console.log("SignIn with user " + user.login);
         // coder l'appel AJAX
+        $http.post('authentification/verification.php', user).success(function (data) {
+            $log.debug('Reception connexion : ');
+            UserService = data;
+            console.log(data);
+        });
     };
 
     $scope.user = user;

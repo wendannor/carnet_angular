@@ -1,8 +1,8 @@
 <?php
 //----------------------------------------------
-// Paramètres de connexion à la base de données
+// ParamÃ¨tres de connexion Ã  la base de donnÃ©es
 //----------------------------------------------
 $db_host = 'localhost';
 $db_login = 'root';
-$db_password = '';
+$db_password = 'root';
 $db_base = 'carnet';
