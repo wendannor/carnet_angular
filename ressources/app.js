@@ -25,11 +25,11 @@ app.config(function ($routeProvider) {
             controller: 'CarnetListingCtrl',
             templateUrl: 'carnet_listing.html'
         })
-        .when('/carnet', {
+        .when('/carnet/:id', {
             controller: 'CarnetCtrl',
             templateUrl: 'carnet.html'
         })
-        .when('/carnet_edit', {
+        .when('/carnet_edit/:id', {
             controller: 'CarnetEditCtrl',
             templateUrl: 'carnet_edit.html'
         })
@@ -41,6 +41,7 @@ app.config(function ($routeProvider) {
             controller: 'NoteEditCtrl',
             templateUrl: 'note_edit.html'
         })
+
         .otherwise({
             redirectTo: '/'
         });
@@ -54,7 +55,7 @@ app.controller('AProposCtrl', function ($scope) {
 
 app.controller('CarnetListingCtrl', function ($scope, $http, $log) {
 
-    $http.get('http://localhost:8888/carnet_angular/api/carnet/').success(function (data) {
+    $http.get('http://localhost:8888/carnet_angular/server/api/carnets').success(function (data) {
         $log.debug('get all carnet = ');
         $log.debug(data);
         $scope.carnets = data;

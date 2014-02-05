@@ -25,11 +25,11 @@
         <th>Actions</th>
     </tr>
     <tr ng-repeat="carnet in carnets">
-        <td>1</td>
-        <td><a href="carnet.html">{{carnet.titre}}</a></td>
-        <td>02/02/2014</td>
+        <td>{{carnet.id_carnet}}</td>
+        <td><a href="#/carnet/{{carnet.id_carnet}}">{{carnet.titre}}</a></td>
+        <td>{{carnet.date_modification}}</td>
         <td>
-            <a href="carnet_edit.html" class="btn btn-default btn-xs">
+            <a href="#/carnet_edit/{{carnet.id_carnet}}" class="btn btn-default btn-xs">
                 <span class="glyphicon glyphicon-edit"></span> modifier
             </a>
             <button type="button" class="btn btn-danger btn-xs">
