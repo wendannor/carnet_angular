@@ -7,6 +7,7 @@
  */
 
 @include_once('class-cruduser.php');
+@include_once('class-crudcarnet.php');
 
 class APIManager
 {
@@ -15,4 +16,10 @@ class APIManager
     {
         return get_class(new CRUDUser());
     }
+
+    public function carnet()
+    {
+        return get_class(new CRUDCarnet());
+    }
+
 }

@@ -24,9 +24,9 @@
         <th>Dernière modification</th>
         <th>Actions</th>
     </tr>
-    <tr>
+    <tr ng-repeat="carnet in carnets">
         <td>1</td>
-        <td><a href="carnet.html">Astronomie</a></td>
+        <td><a href="carnet.html">{{carnet.titre}}</a></td>
         <td>02/02/2014</td>
         <td>
             <a href="carnet_edit.html" class="btn btn-default btn-xs">
@@ -37,19 +37,6 @@
             </button>
         </td>
     </tr>
-    <tr>
-        <td>2</td>
-        <td><a href="carnet.html">Bandes dessinées</a></td>
-        <td>02/02/2014</td>
-        <td>
-            <a href="carnet_edit.html" class="btn btn-default btn-xs">
-                <span class="glyphicon glyphicon-edit"></span> modifier
-            </a>
-            <button type="button" class="btn btn-danger btn-xs">
-                <span class="glyphicon glyphicon-remove"></span> supprimer
-            </button>
-        </td>
-    </tr>
-</table>
+    </table>
 
 <a class="btn btn-primary btn-lg" href="carnet_edit.html" role="button">Créer un nouveau carnet</a>

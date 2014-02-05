@@ -2,9 +2,12 @@
 @include_once('class-apimanager.php');
 $url_params = explode('/', $_SERVER['REQUEST_URI']);
 
+//ex : urls_params = /carnet_angular/api/user
+//ex : urls_params = /carnet_angular/api/carnet
+
 $ressource = $url_params[3];
 
-echo 'ressource = ' . $ressource;
+$result = '{}';
 
 //Récuperation de la definition de la classe APIManager
 $service_manager_class = new ReflectionClass('APIManager');
@@ -16,7 +19,6 @@ try {
     $ressource_class = new ReflectionClass($ressource_class);
     //Instanciation d'un objet de type $serviceClasse
     $ressource_object = $ressource_class->newInstanceArgs();
-
 
     switch ($_SERVER['REQUEST_METHOD']) {
 
@@ -56,7 +58,6 @@ try {
 }
 
 $json = json_encode($result);
-echo '<br />';
-echo '<pre>'.$json.'</pre>';
+ echo $json;
 
 return;

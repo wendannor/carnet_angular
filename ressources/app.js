@@ -1,6 +1,6 @@
 var app = angular.module("CarnetApp",
     ['ngRoute',
-     'Carnet.services'
+        'Carnet.services'
     ]);
 
 app.config(function ($routeProvider) {
@@ -18,27 +18,27 @@ app.config(function ($routeProvider) {
             templateUrl: "inscription.html"
         })
         .when('/apropos', {
-            controller:'AProposCtrl',
+            controller: 'AProposCtrl',
             templateUrl: 'apropos.html'
         })
         .when('/carnet_listing', {
-            controller:'CarnetListingCtrl',
+            controller: 'CarnetListingCtrl',
             templateUrl: 'carnet_listing.html'
         })
         .when('/carnet', {
-            controller:'CarnetCtrl',
+            controller: 'CarnetCtrl',
             templateUrl: 'carnet.html'
         })
         .when('/carnet_edit', {
-            controller:'CarnetEditCtrl',
+            controller: 'CarnetEditCtrl',
             templateUrl: 'carnet_edit.html'
         })
         .when('/note', {
-            controller:'NoteCtrl',
+            controller: 'NoteCtrl',
             templateUrl: 'note.html'
         })
         .when('/note_edit', {
-            controller:'NoteEditCtrl',
+            controller: 'NoteEditCtrl',
             templateUrl: 'note_edit.html'
         })
         .otherwise({
@@ -46,37 +46,44 @@ app.config(function ($routeProvider) {
         });
 });
 
-app.controller('HomeCtrl', function($scope){
+app.controller('HomeCtrl', function ($scope) {
 });
 
-app.controller('AProposCtrl', function($scope){
+app.controller('AProposCtrl', function ($scope) {
 });
 
-app.controller('CarnetListingCtrl', function($scope){
+app.controller('CarnetListingCtrl', function ($scope, $http, $log) {
+
+    $http.get('http://localhost:8888/carnet_angular/api/carnet/').success(function (data) {
+        $log.debug('get all carnet = ');
+        $log.debug(data);
+        $scope.carnets = data;
+    });
+
 });
 
-app.controller('CarnetCtrl', function($scope){
+app.controller('CarnetCtrl', function ($scope) {
 });
 
-app.controller('CarnetEditCtrl', function($scope){
+app.controller('CarnetEditCtrl', function ($scope) {
 });
 
-app.controller('NoteCtrl', function($scope){
+app.controller('NoteCtrl', function ($scope) {
 });
 
-app.controller('NoteEditCtrl', function($scope){
+app.controller('NoteEditCtrl', function ($scope) {
 });
 
-app.controller('InscriptionCtrl', function($scope){
+app.controller('InscriptionCtrl', function ($scope) {
 });
 
-app.controller('ConnexionCtrl', function($scope, $http, $log, UserService){
-   var user = {
-       login: '',
-       password: ''
-   };
+app.controller('ConnexionCtrl', function ($scope, $http, $log, UserService) {
+    var user = {
+        login: '',
+        password: ''
+    };
 
-    $scope.signIn = function(user) {
+    $scope.signIn = function (user) {
         console.log("SignIn with user " + user.login);
         // coder l'appel AJAX
         $http.post('authentification/verification.php', user).success(function (data) {
