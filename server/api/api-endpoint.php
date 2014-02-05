@@ -58,6 +58,6 @@ try {
 }
 
 $json = json_encode($result);
- echo $json;
+echo $json;
 
 return;

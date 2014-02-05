@@ -5,30 +5,30 @@
  * Date: 04/02/2014
  * Time: 22:44
  */
-
 class CRUDCarnet {
+    private $this->mysqli;
+
+    private function __construct($mysqli){
+        $this->mysqli = $mysqli;
+    }
 
     public function get_by_id($id) {
         echo '<br /> get_by_id of CRUDCarnet with id '.$id;
     }
 
     public function get_all() {
-            require "../config.inc.php";
+        if ($this->mysqli->connect_errno) {
+            echo "Echec lors de la connexion à MySQL : " . $this->mysqli->connect_error;
+        }
 
-            $db = mysql_connect($db_host, $db_login, $db_password);
-            mysql_select_db($db_base, $db);
+        $res = $this->mysqli->query("SELECT * FROM carnet");
 
-            // Création de la requète SQL
-            $query ="SELECT * FROM carnet" ;
 
-            // Exécution de la requète SQL
-            $result = mysql_query($query, $db);
-
-            $tab = array();
-            while ($row = mysql_fetch_assoc($result)) {
-                   $tab[]= $row;
-               }
-            return $tab;
+        $tab = array();
+        while($row = $res->fetch_assoc()) {
+           $tab[]= $row;
+        }
+        return $tab;
     }
 
     public function update($data) {

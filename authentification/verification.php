@@ -2,7 +2,7 @@
 function getUser($login, $password) {
     
     // Connexion à la base de données
-    require "config.inc.php";
+    require "../server/config.php";
     $db = mysql_connect($db_host, $db_login, $db_password);
     mysql_select_db($db_base, $db);
 

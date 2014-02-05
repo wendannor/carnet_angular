@@ -6,20 +6,24 @@
  * Time: 22:44
  */
 
+@include_once('class-dbconnexion.php');
 @include_once('class-cruduser.php');
 @include_once('class-crudcarnet.php');
 
-class APIManager
-{
+class APIManager {
 
-    public function user()
-    {
+    public function user() {
         return get_class(new CRUDUser());
     }
 
-    public function carnet()
-    {
-        return get_class(new CRUDCarnet());
+    public function carnet() {
+        $db = DBConnexion::getInstance();
+        $mysqli = $db->getConnexion();
+        
+        return get_class(new CRUDCarnet($mysqli));
     }
 
 }
+
+
+
