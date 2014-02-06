@@ -39,6 +39,10 @@ $app->get("/carnets", function () use ($app, $db) {
     echo json_encode($carnets);
 });
 
+$app->get("/carnet/:idCarnet/note/:idNote", function($idCarnet, $idNote) use ($app, $db){
+    echo "We want to see in the carnet #$idCarnet the note #$idNote";
+});
+
 
 $app->get("/carnet/:id", function ($id) use ($app, $db) {
     $app->response()->header("Content-Type", "application/json");
