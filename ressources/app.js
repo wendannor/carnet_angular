@@ -66,7 +66,22 @@ app.controller('CarnetListingCtrl', function ($scope, $http, $log) {
 app.controller('CarnetCtrl', function ($scope) {
 });
 
-app.controller('CarnetEditCtrl', function ($scope) {
+app.controller('CarnetEditCtrl', function ($scope, $routeParams, $log, $http) {
+
+    $log.debug($routeParams.id);
+    var id = $routeParams.id;
+    $http.get('/carnet_angular/server/api/carnet/' + id).success(function (data) {
+        $scope.carnet = data;
+    });
+
+    $scope.updateCarnet = function (carnet) {
+        $http.put('/carnet_angular/server/api/carnet/' + id, carnet).success(function (data) {
+            $log.debug(data);
+        }).error(function (error) {
+            $log.debug(error);
+        });
+    };
+
 });
 
 app.controller('NoteCtrl', function ($scope) {
@@ -90,7 +105,6 @@ app.controller('ConnexionCtrl', function ($scope, $http, $log, UserService) {
         $http.post('authentification/verification.php', user).success(function (data) {
             $log.debug('Reception connexion : ');
             UserService = data;
-            console.log(data);
         });
     };
 

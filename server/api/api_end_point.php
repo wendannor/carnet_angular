@@ -7,12 +7,12 @@
  */
 
 require '../vendor/autoload.php';
-require '../config.inc.php';
+require '../config.php';
 
 
-$dsn = "mysql:dbname=carnet;host=$db_host";
-$username = $db_login;
-$password = $db_password;
+$dsn = "mysql:dbname=".DB_NAME.";host=".DB_HOST;
+$username = DB_USER;
+$password = DB_PASS;
 
 $pdo = new PDO($dsn, $username, $password);
 $db = new NotORM($pdo);
@@ -66,12 +66,14 @@ $app->post("/carnet", function () use($app, $db) {
 });
 
 $app->put("/carnet/:id", function ($id) use ($app, $db) {
+    echo 'put   ';
     $app->response()->header("Content-Type", "application/json");
     $carnet = $db->carnet()->where("id_carnet", $id);
     //@TODO better check on $result, if false still passes
     if ($carnet->fetch()) {
-        $post = $app->request()->put();
-        $result = $carnet->update($post);
+        $put = json_decode($app->request()->getBody(), true);
+        echo '   params   ' . print_r($put, true);
+        $result = $carnet->update($put);
         echo json_encode(array(
             "status" => (bool)$result,
             "message" => "Carnet updated successfully"
