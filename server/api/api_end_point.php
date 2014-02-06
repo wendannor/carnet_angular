@@ -8,6 +8,7 @@
 
 require '../vendor/autoload.php';
 require '../config.php';
+require '../Utils.class.php';
 
 
 $dsn = "mysql:dbname=".DB_NAME.";host=".DB_HOST;
@@ -31,76 +32,80 @@ $app->get("/", function() {
     echo "<h1>Hello Slim World</h1>";
 });
 
-$app->get("/carnets", function () use ($app, $db) {
+$app->get("/notebooks", function () use ($app, $db) {
 
-    $carnets = $db->carnet();
-
+    $notebooks = $db->notebook();
+    $result = array();
+    foreach ($notebooks as $notebook) {
+        $result[] = Utils::arraySnakeCaseToCamelCase($notebook);
+    }
     $app->response()->header("Content-Type", "application/json");
-    echo json_encode($carnets);
+    echo json_encode($result);
 });
 
-$app->get("/carnet/:idCarnet/note/:idNote", function($idCarnet, $idNote) use ($app, $db){
-    echo "We want to see in the carnet #$idCarnet the note #$idNote";
+$app->get("/notebook/:idnotebook/note/:idNote", function($idnotebook, $idNote) use ($app, $db){
+    echo "We want to see in the notebook #$idnotebook the note #$idNote";
 });
 
 
-$app->get("/carnet/:id", function ($id) use ($app, $db) {
+$app->get("/notebook/:id", function ($id) use ($app, $db) {
     $app->response()->header("Content-Type", "application/json");
-    $data = $db->carnet()->where("id_carnet", $id);
-    if ($carnet = $data->fetch()) {
-        echo json_encode($carnet);
+    $data = $db->notebook()->where("id_notebook", $id);
+    if ($notebook = $data->fetch()) {
+        $notebook = Utils::arraySnakeCaseToCamelCase($notebook);
+        echo json_encode($notebook);
     }
     else{
         echo json_encode(array(
             "status" => false,
-            "message" => "Carnet ID $id does not exist"
+            "message" => "notebook ID $id does not exist"
         ));
     }
 });
 
-$app->post("/carnet", function () use($app, $db) {
+$app->post("/notebook", function () use($app, $db) {
     $app->response()->header("Content-Type", "application/json");
-    $carnet = $app->request()->post();
-    $result = $db->carnet->insert($carnet);
+    $params = $app->request()->post();
+    $result = $db->notebook->insert(Utils::arrayCamelCaseToSnakeCase($params));
     echo json_encode(array("id" => $result["id"]));
 });
 
-$app->put("/carnet/:id", function ($id) use ($app, $db) {
-    echo 'put   ';
+$app->put("/notebook/:id", function ($id) use ($app, $db) {
+
     $app->response()->header("Content-Type", "application/json");
-    $carnet = $db->carnet()->where("id_carnet", $id);
+    $notebook = $db->notebook()->where("id_notebook", $id);
     //@TODO better check on $result, if false still passes
-    if ($carnet->fetch()) {
-        $put = json_decode($app->request()->getBody(), true);
-        echo '   params   ' . print_r($put, true);
-        $result = $carnet->update($put);
+    if ($notebook->fetch() != false) {
+        $params = json_decode($app->request()->getBody(), true);
+
+        $result = $notebook->update(Utils::arrayCamelCaseToSnakeCase($params));
         echo json_encode(array(
             "status" => (bool)$result,
-            "message" => "Carnet updated successfully"
+            "message" => "notebook updated successfully"
         ));
     }
     else{
         echo json_encode(array(
             "status" => false,
-            "message" => "Carnet id $id does not exist"
+            "message" => "notebook id $id does not exist"
         ));
     }
 });
 
-$app->delete("/carnet/:id", function ($id) use($app, $db) {
+$app->delete("/notebook/:id", function ($id) use($app, $db) {
     $app->response()->header("Content-Type", "application/json");
-    $carnet = $db->carnet()->where("id_carnet", $id);
-    if ($carnet->fetch()) {
-        $result = $carnet->delete();
+    $notebook = $db->notebook()->where("id_notebook", $id);
+    if ($notebook->fetch()) {
+        $result = $notebook->delete();
         echo json_encode(array(
             "status" => true,
-            "message" => "Carnet deleted successfully"
+            "message" => "notebook deleted successfully"
         ));
     }
     else{
         echo json_encode(array(
             "status" => false,
-            "message" => "Carnet id $id does not exist"
+            "message" => "notebook id $id does not exist"
         ));
     }
 });
