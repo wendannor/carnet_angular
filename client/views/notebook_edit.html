@@ -20,6 +20,7 @@
         {{ notebook | json }}
     </pre>
 
+<div  ng-show="msgNotification" class="alert" ng-class="{'alert-success': ok, 'alert-danger': !ok}">{{msgNotification}}</div>
 <form class="form-horizontal" role="form">
     <div class="form-group">
         <label for="inputTitre" class="col-sm-2 control-label">Titre</label>
@@ -33,7 +34,6 @@
             <textarea class="form-control" id="inputText" ng-model="notebook.description"></textarea>
         </div>
     </div>
-    
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-primary btn-lg" ng-click="updateNotebook(notebook)">Save</button>

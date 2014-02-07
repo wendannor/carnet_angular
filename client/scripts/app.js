@@ -54,32 +54,60 @@ app.controller('AboutCtrl', function ($scope) {
 
 app.controller('NotebookListingCtrl', function ($scope, $http, $log) {
 
-    $http.get('/carnet_angular/server/api/notebooks').success(function (data) {
-        $log.debug('get all notebook = ');
-        $log.debug(data);
-        $scope.notebooks = data;
-    });
+    var getAllNotebook = function () {
+        $http.get('/carnet_angular/server/api/notebooks').success(function (data) {
+            $log.debug('get all notebook = ');
+            $log.debug(data);
+            $scope.notebooks = data;
+        });
+    };
+
+    getAllNotebook();
+
+    $scope.delete = function (id) {
+        $http.delete('/carnet_angular/server/api/notebook/' + id).success(function (data) {
+            $log.debug(data);
+            getAllNotebook();
+        });
+    };
 
 });
 
 app.controller('NotebookCtrl', function ($scope) {
 });
 
-app.controller('NotebookEditCtrl', function ($scope, $routeParams, $log, $http) {
+app.controller('NotebookEditCtrl', function ($scope, $routeParams, $log, $http, $location) {
 
-    $log.debug($routeParams.id);
     var id = $routeParams.id;
-    $http.get('/carnet_angular/server/api/notebook/' + id).success(function (data) {
-        $scope.notebook = data;
-    });
+    if (id != 0) {
+        $http.get('/carnet_angular/server/api/notebook/' + id).success(function (data) {
+            $scope.notebook = data;
+        });
+    }
 
     $scope.updateNotebook = function (notebook) {
-        $http.put('/carnet_angular/server/api/notebook/' + id, notebook).success(function (data) {
+        var success = function (data) {
             $log.debug(data);
-        }).error(function (error) {
+            $scope.ok = true;
+            $scope.msgNotification = "Notebook saved";
+            if (id == 0) {
+                $location.path("/notebook_listing");
+            }
+        };
+        var failure = function (error) {
             $log.debug(error);
-        });
+            $scope.ok = false;
+            $scope.msgNotification = "An error has occured";
+        };
+        if (id != 0) {
+            $http.put('/carnet_angular/server/api/notebook/' + id, notebook).success(success).error(failure);
+        } else {
+            //TODO remove the hard coded id user
+            notebook.idUser = 1;
+            $http.post('/carnet_angular/server/api/notebook', notebook).success(success).error(failure);
+        }
     };
+
 
 });
 

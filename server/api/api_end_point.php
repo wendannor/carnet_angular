@@ -64,9 +64,13 @@ $app->get("/notebook/:id", function ($id) use ($app, $db) {
 });
 
 $app->post("/notebook", function () use($app, $db) {
+    echo 'POST';
+
     $app->response()->header("Content-Type", "application/json");
-    $params = $app->request()->post();
-    $result = $db->notebook->insert(Utils::arrayCamelCaseToSnakeCase($params));
+    $params = json_decode($app->request()->getBody(), true);
+    $params = Utils::arrayCamelCaseToSnakeCase($params);
+    echo print_r($params, true);
+    $result = $db->notebook->insert($params);
     echo json_encode(array("id" => $result["id"]));
 });
 
