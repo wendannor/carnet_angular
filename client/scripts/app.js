@@ -86,6 +86,10 @@ app.controller('NotebookEditCtrl', function ($scope, $routeParams, $log, $http, 
     }
 
     $scope.updateNotebook = function (notebook) {
+        $log.debug('On update');
+
+        $log.debug(notebook);
+
         var success = function (data) {
             $log.debug(data);
             $scope.ok = true;
