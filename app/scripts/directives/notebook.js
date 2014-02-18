@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('carnetApp')
-  .directive('notebook', function () {
+    .directive('notebook', function () {
         return {
             restrict: 'E',
             scope: {
@@ -17,7 +17,7 @@ angular.module('carnetApp')
                 '</div>' +
                 '<div class="form-group">' +
                 '<label for="inputText" class="col-sm-2 control-label">Texte</label>' +
-                '<div class="col-sm-10">'+
+                '<div class="col-sm-10">' +
                 '<textarea class="form-control" id="inputText" ng-model="notebook.description"></textarea>' +
                 '</div>' +
                 '</div>' +
@@ -30,4 +30,4 @@ angular.module('carnetApp')
             link: function (scope, element, attrs) {
             }
         };
-  });
+    });
