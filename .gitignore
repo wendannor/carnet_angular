@@ -6,5 +6,3 @@ dist
 app/bower_components
 server/vendor/vrana/notorm/
 .idea/workspace.xml
-vendor
-
