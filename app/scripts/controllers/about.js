@@ -7,4 +7,5 @@ angular.module('carnetApp')
       'AngularJS',
       'Karma'
     ];
+        console.log(test);
   });
