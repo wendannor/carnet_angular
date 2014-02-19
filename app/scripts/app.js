@@ -41,6 +41,6 @@ angular.module('carnetApp', [
         controller: 'SignupCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        templateUrl: '404.html'
       });
   });
