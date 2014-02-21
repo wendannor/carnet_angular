@@ -26,7 +26,10 @@ angular.module('carnetApp', [
             })
             .when('/notebook_listing', {
                 templateUrl: 'views/notebook_listing.html',
-                controller: 'NotebookListingCtrl'
+                controller: 'NotebookListingCtrl',
+                resolve: {
+                    notebooks: notebookListingCtrl.getAllNotebooks
+                }
             })
             .when('/notebook', {
                 templateUrl: 'views/notebook.html',
