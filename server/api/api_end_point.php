@@ -33,6 +33,7 @@ $app->get("/", function() {
 });
 
 $app->get("/notebooks", function () use ($app, $db) {
+    header_status(200);
 
     $notebooks = $db->notebook();
     $result = array();
