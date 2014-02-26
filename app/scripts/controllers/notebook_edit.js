@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('carnetApp')
-    .controller('NotebookEditCtrl', function ($scope, $log, $http, $routeParams) {
+    .controller('NotebookEditCtrl', function ($scope, $log, $http, $routeParams, $location, apiEndPoint) {
         var id = $routeParams.id;
         if (id != 0) {
-            $http.get('/carnet_angular/server/api/notebook/' + id).success(function (data) {
+            $http.get(apiEndPoint + '/notebook/' + id).success(function (data) {
                 $scope.notebook = data;
             });
         }
@@ -28,11 +28,11 @@ angular.module('carnetApp')
                 $scope.msgNotification = "An error has occured";
             };
             if (id != 0) {
-                $http.put('/carnet_angular/server/api/notebook/' + id, notebook).success(success).error(failure);
+                $http.put(apiEndPoint + '/notebook/' + id, notebook).success(success).error(failure);
             } else {
                 //TODO remove the hard coded id user
                 notebook.idUser = 1;
-                $http.post('/carnet_angular/server/api/notebook', notebook).success(success).error(failure);
+                $http.post(apiEndPoint + '/notebook', notebook).success(success).error(failure);
             }
         };
 

@@ -1,20 +1,18 @@
 'use strict';
 
 var notebookListingCtrl = angular.module('carnetApp')
-    .controller('NotebookListingCtrl', function ($scope, $log, $http, notebooks) {
+    .controller('NotebookListingCtrl', function ($scope, $log, $http, notebooks, apiEndPoint) {
 
-//        var getAllNotebook = function () {
-//            $http.get('/carnet_angular/server/api/notebooks').success(function (data) {
-//                $log.debug('get all notebook = ');
-//                $log.debug(data);
-//                $scope.notebooks = data;
-//            });
-//        };
-//
-//        getAllNotebook();
+        var getAllNotebook = function () {
+            $http.get(apiEndPoint + '/notebooks').success(function (data) {
+                $log.debug('get all notebook = ');
+                $log.debug(data);
+                $scope.notebooks = data;
+            });
+        };
 
         $scope.delete = function (id) {
-            $http.delete('/carnet_angular/server/api/notebook/' + id).success(function (data) {
+            $http.delete(apiEndPoint + '/notebook/' + id).success(function (data) {
                 $log.debug(data);
                 getAllNotebook();
             });
@@ -24,10 +22,10 @@ var notebookListingCtrl = angular.module('carnetApp')
 
     });
 
-notebookListingCtrl.getAllNotebooks = function ($q, $http) {
+notebookListingCtrl.getAllNotebooks = function ($q, $http, apiEndPoint) {
     var defer = $q.defer();
 
-    $http.get('/carnet_angular/server/api/notebooks').success(function (data) {
+    $http.get(apiEndPoint + '/notebooks').success(function (data) {
         defer.resolve(data);
     })
     .error(function () {

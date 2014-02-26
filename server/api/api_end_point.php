@@ -10,6 +10,11 @@ require '../vendor/autoload.php';
 require '../config.php';
 require '../Utils.class.php';
 
+// quick and dirty fix for cross domain
+header('Access-Control-Allow-Origin: *');
+header('Content-type: application/json');
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+
 
 $dsn = "mysql:dbname=".DB_NAME.";host=".DB_HOST;
 $username = DB_USER;
@@ -32,8 +37,16 @@ $app->get("/", function() {
     echo "<h1>Hello Slim World</h1>";
 });
 
+//fix for cors request
+// should match every options request
+$app->options('/(:name+)', function () use($app) {
+   $response = $app->response();
+//   $response->header('Access-Control-Allow-Origin', '*');
+   $response->header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE');
+   $response->header('Access-Control-Allow-Headers', 'accept, origin, content-type');
+});
+
 $app->get("/notebooks", function () use ($app, $db) {
-    header_status(200);
 
     $notebooks = $db->notebook();
     $result = array();
