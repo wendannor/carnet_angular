@@ -6,7 +6,7 @@ angular.module('carnetApp', [
         'ngSanitize',
         'ngRoute'
     ])
-    .config(function ($routeProvider) {
+    .config(function ($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'views/home.html',
@@ -46,4 +46,6 @@ angular.module('carnetApp', [
             .otherwise({
                 templateUrl: '404.html'
             });
+
+        $locationProvider.html5Mode(true);
     });
