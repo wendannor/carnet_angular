@@ -47,5 +47,5 @@ angular.module('carnetApp', [
                 templateUrl: '404.html'
             });
 
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(false);
     });
