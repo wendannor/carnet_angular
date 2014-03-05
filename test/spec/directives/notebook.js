@@ -24,8 +24,9 @@ describe('Directive: notebook', function () {
     });
 
     it('should have title', function () {
-        $scope.$digest();
-        expect(element.children()).toContain('My Title');
+        scope.$digest();
+        expect(element.children).toContain("lol");
+        expect(element).toContain('My Title');
     })
 
 });
